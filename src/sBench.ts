@@ -11,19 +11,15 @@ export function sbench(framework: ReactiveFramework) {
   bench(createComputations1to1, COUNT, COUNT);
   bench(createComputations2to1, COUNT / 2, COUNT);
   bench(createComputations4to1, COUNT / 4, COUNT);
-  bench(createComputations1000to1, COUNT / 1000, COUNT);
   // createTotal += bench(createComputations8to1, COUNT, 8 * COUNT);
   bench(createComputations1to2, COUNT, COUNT / 2);
   bench(createComputations1to4, COUNT, COUNT / 4);
   bench(createComputations1to8, COUNT, COUNT / 8);
-  bench(createComputations1to1000, COUNT, COUNT / 1000);
   bench(updateComputations1to1, COUNT * 4, 1);
   bench(updateComputations2to1, COUNT * 2, 2);
   bench(updateComputations4to1, COUNT, 4);
-  bench(updateComputations1000to1, COUNT / 100, 1000);
   bench(updateComputations1to2, COUNT * 4, 1);
   bench(updateComputations1to4, COUNT * 4, 1);
-  bench(updateComputations1to1000, COUNT * 4, 1);
 
   function bench(
     fn: (n: number, sources: any[]) => void,
@@ -88,15 +84,6 @@ export function sbench(framework: ReactiveFramework) {
   function createComputations0to1(n: number, _sources: Computed<number>[]) {
     for (let i = 0; i < n; i++) {
       createComputation0(i);
-    }
-  }
-
-  function createComputations1to1000(n: number, sources: Computed<number>[]) {
-    for (let i = 0; i < n / 1000; i++) {
-      const { read: get } = sources[i];
-      for (let j = 0; j < 1000; j++) {
-        createComputation1(get, [sources[i]]);
-      }
     }
   }
 
@@ -271,23 +258,6 @@ export function sbench(framework: ReactiveFramework) {
     }
   }
 
-  function updateComputations1000to1(n: number, sources: Signal<number>[]) {
-    let { read: _get1, write: set1 } = sources[0];
-    framework.computed(
-      () => {
-        let sum = 0;
-        for (let i = 0; i < 1000; i++) {
-          sum += sources[i].read();
-        }
-        return sum;
-      },
-      sources.slice(0, 1000)
-    );
-    for (let i = 0; i < n; i++) {
-      set1(i);
-    }
-  }
-
   function updateComputations1to2(n: number, sources: Signal<number>[]) {
     let { read: get1, write: set1 } = sources[0];
     framework.computed(() => get1(), [sources[0]]);
@@ -304,16 +274,6 @@ export function sbench(framework: ReactiveFramework) {
     framework.computed(() => get1(), [sources[0]]);
     framework.computed(() => get1(), [sources[0]]);
     for (let i = 0; i < n / 4; i++) {
-      set1(i);
-    }
-  }
-
-  function updateComputations1to1000(n: number, sources: Signal<number>[]) {
-    const { read: get1, write: set1 } = sources[0];
-    for (let i = 0; i < 1000; i++) {
-      framework.computed(() => get1(), [sources[0]]);
-    }
-    for (let i = 0; i < n / 1000; i++) {
       set1(i);
     }
   }
