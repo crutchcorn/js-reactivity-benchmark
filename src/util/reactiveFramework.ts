@@ -5,8 +5,11 @@
 export interface ReactiveFramework {
   name: string;
   signal<T>(initialValue: T): Signal<T>;
-  computed<T>(fn: () => T): Computed<T>;
-  effect(fn: () => void): void;
+  computed<T>(
+    fn: () => T,
+    deps: Array<Signal<any> | Computed<any>>
+  ): Computed<T>;
+  effect(fn: () => void, deps: Array<Signal<any> | Computed<any>>): void;
   withBatch<T>(fn: () => T): void;
   withBuild<T>(fn: () => T): T;
 }
@@ -14,8 +17,10 @@ export interface ReactiveFramework {
 export interface Signal<T> {
   read(): T;
   write(v: T): void;
+  identity(): any;
 }
 
 export interface Computed<T> {
   read(): T;
+  identity(): any;
 }

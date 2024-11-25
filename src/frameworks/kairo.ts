@@ -7,16 +7,19 @@ import { collectScope } from "kairo";
 export const kairoFramework: ReactiveFramework = {
   name: "kairo",
   signal: (initialValue) => {
-    const [get, write] = mutValue(initialValue);
+    const val = mutValue(initialValue);
+    const [get, write] = val;
     return {
       read: () => get.value,
       write: (v) => write(v),
+      identity: () => get,
     };
   },
   computed: (fn) => {
     const c = computed(fn);
     return {
       read: () => c.value,
+      identity: () => c,
     };
   },
   effect: (fn) => effect(fn),

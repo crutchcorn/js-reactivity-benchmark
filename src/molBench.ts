@@ -18,21 +18,27 @@ export async function molBench(framework: ReactiveFramework) {
   const iter = framework.withBuild(() => {
     const A = framework.signal(0);
     const B = framework.signal(0);
-    const C = framework.computed(() => (A.read() % 2) + (B.read() % 2));
-    const D = framework.computed(() =>
-      numbers.map((i) => ({ x: i + (A.read() % 2) - (B.read() % 2) }))
+    const C = framework.computed(() => (A.read() % 2) + (B.read() % 2), [A, B]);
+    const D = framework.computed(
+      () => numbers.map((i) => ({ x: i + (A.read() % 2) - (B.read() % 2) })),
+      [A, B]
     );
-    const E = framework.computed(() =>
-      hard(C.read() + A.read() + D.read()[0].x, "E")
+    const E = framework.computed(
+      () => hard(C.read() + A.read() + D.read()[0].x, "E"),
+      [A, C, D]
     );
-    const F = framework.computed(() => hard(D.read()[2].x || B.read(), "F"));
+    const F = framework.computed(
+      () => hard(D.read()[2].x || B.read(), "F"),
+      [D, B]
+    );
     const G = framework.computed(
-      () => C.read() + (C.read() || E.read() % 2) + D.read()[4].x + F.read()
+      () => C.read() + (C.read() || E.read() % 2) + D.read()[4].x + F.read(),
+      [C, E, D, F]
     );
 
-    framework.effect(() => res.push(hard(G.read(), "H")));
-    framework.effect(() => res.push(G.read()));
-    framework.effect(() => res.push(hard(F.read(), "J")));
+    framework.effect(() => res.push(hard(G.read(), "H")), [G]);
+    framework.effect(() => res.push(G.read()), [G]);
+    framework.effect(() => res.push(hard(F.read(), "J")), [F]);
 
     return (i: number) => {
       res.length = 0;

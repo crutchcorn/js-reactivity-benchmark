@@ -21,10 +21,16 @@ const cellx = (framework: ReactiveFramework, layers: number) => {
     for (let i = layers; i > 0; i--) {
       const m = layer;
       const s = {
-        prop1: framework.computed(() => m.prop2.read()),
-        prop2: framework.computed(() => m.prop1.read() - m.prop3.read()),
-        prop3: framework.computed(() => m.prop2.read() + m.prop4.read()),
-        prop4: framework.computed(() => m.prop3.read()),
+        prop1: framework.computed(() => m.prop2.read(), [m.prop2]),
+        prop2: framework.computed(
+          () => m.prop1.read() - m.prop3.read(),
+          [m.prop1, m.prop3]
+        ),
+        prop3: framework.computed(
+          () => m.prop2.read() + m.prop4.read(),
+          [m.prop2, m.prop4]
+        ),
+        prop4: framework.computed(() => m.prop3.read(), [m.prop3]),
       };
 
       framework.effect(() => s.prop1.read());

@@ -165,7 +165,7 @@ function makeRow(
           sum += src.read();
         }
         return sum;
-      });
+      }, mySources);
     } else {
       // dynamic node, drops one of the sources depending on the value of the first element
       const first = mySources[0];
@@ -182,7 +182,7 @@ function makeRow(
         }
 
         return sum;
-      });
+      }, [first, ...tail]);
       return node;
     }
   });

@@ -14,12 +14,14 @@ export const alienFramework: ReactiveFramework = {
     return {
       read: () => data.get(),
       write: (v) => data.set(v),
+      identity: () => data,
     };
   },
   computed: (fn) => {
     const c = new Computed(fn);
     return {
       read: () => c.get(),
+      identity: () => c,
     };
   },
   effect: (fn) => new Effect(fn).run(),

@@ -10,14 +10,14 @@ export function deepPropagation(bridge: ReactiveFramework) {
     let c = current;
     current = bridge.computed(() => {
       return c.read() + 1;
-    });
+    }, [c]);
   }
   let callCounter = new Counter();
 
   bridge.effect(() => {
     current.read();
     callCounter.count++;
-  });
+  }, [current]);
 
   const iter = 50;
 

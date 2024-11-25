@@ -8,12 +8,14 @@ export const reactivelyFramework: ReactiveFramework = {
     return {
       write: (v) => r.set(v),
       read: () => r.get(),
+      identity: () => r,
     };
   },
   computed: (fn) => {
     const r = new Reactive(fn);
     return {
       read: () => r.get(),
+      identity: () => r,
     };
   },
   effect: (fn) => {

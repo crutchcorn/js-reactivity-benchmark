@@ -9,12 +9,14 @@ export const angularFramework: ReactiveFramework = {
     return {
       write: (v) => s.set(v),
       read: () => s(),
+      identity: () => s,
     };
   },
   computed: (fn) => {
     const c = computed(fn);
     return {
       read: () => c(),
+      identity: () => c,
     };
   },
   effect: (fn) => effect(fn),

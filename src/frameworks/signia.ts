@@ -8,12 +8,14 @@ export const signiaFramework: ReactiveFramework = {
     return {
       write: (v) => s.set(v),
       read: () => s.value,
+      identity: () => s,
     };
   },
   computed: (fn) => {
     const c = computed("c", fn);
     return {
       read: () => c.value,
+      identity: () => c,
     };
   },
   effect: (fn) => react("r", fn),

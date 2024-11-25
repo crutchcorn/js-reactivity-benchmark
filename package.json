@@ -17,6 +17,7 @@
     "@preact/signals": "^1.3.0",
     "@reactively/core": "^0.0.8",
     "@solidjs/reactivity": "^0.0.9",
+    "@tanstack/store": "https://pkg.pr.new/@tanstack/store@109",
     "@vue/reactivity": "^3.5.13",
     "alien-signals": "^0.4.0",
     "compostate": "0.5.1",

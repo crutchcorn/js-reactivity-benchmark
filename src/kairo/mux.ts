@@ -4,13 +4,13 @@ export function mux(bridge: ReactiveFramework) {
   let heads = new Array(100).fill(null).map((_) => bridge.signal(0));
   const mux = bridge.computed(() => {
     return Object.fromEntries(heads.map((h) => h.read()).entries());
-  });
+  }, heads);
   const splited = heads
-    .map((_, index) => bridge.computed(() => mux.read()[index]))
-    .map((x) => bridge.computed(() => x.read() + 1));
+    .map((_, index) => bridge.computed(() => mux.read()[index], [mux]))
+    .map((x) => bridge.computed(() => x.read() + 1, [x]));
 
   splited.forEach((x) => {
-    bridge.effect(() => x.read());
+    bridge.effect(() => x.read(), [x]);
   });
   return () => {
     for (let i = 0; i < 10; i++) {

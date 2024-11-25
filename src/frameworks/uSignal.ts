@@ -8,12 +8,14 @@ export const usignalFramework: ReactiveFramework = {
     return {
       write: (v) => (s.value = v),
       read: () => s.value,
+      identity: () => s,
     };
   },
   computed: (fn) => {
     const c = computed(fn);
     return {
       read: () => c.value,
+      identity: () => c,
     };
   },
   effect: (fn) => effect(fn),

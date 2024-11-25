@@ -8,12 +8,14 @@ export const sFramework: ReactiveFramework = {
     return {
       read: () => data(),
       write: (v) => data(v),
+      identity: () => data,
     };
   },
   computed: (fn) => {
     const computed = S(fn);
     return {
       read: () => computed(),
+      identity: () => computed,
     };
   },
   effect: (fn) => S(fn),

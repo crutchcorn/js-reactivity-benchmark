@@ -25,7 +25,7 @@ function frameworkTests({ framework, testPullCounts }: FrameworkInfo) {
   test(`${name} | simple dependency executes`, () => {
     framework.withBuild(() => {
       const s = framework.signal(2);
-      const c = framework.computed(() => s.read() * 2);
+      const c = framework.computed(() => s.read() * 2, [s]);
 
       expect(c.read()).toEqual(4);
     });
@@ -34,7 +34,7 @@ function frameworkTests({ framework, testPullCounts }: FrameworkInfo) {
   test(`${name} | simple write`, () => {
     framework.withBuild(() => {
       const s = framework.signal(2);
-      const c = framework.computed(() => s.read() * 2);
+      const c = framework.computed(() => s.read() * 2, [s]);
       expect(s.read()).toEqual(2);
       expect(c.read()).toEqual(4);
 
@@ -97,7 +97,7 @@ function frameworkTests({ framework, testPullCounts }: FrameworkInfo) {
   test(`${name} | withBuild`, () => {
     const r = framework.withBuild(() => {
       const s = framework.signal(2);
-      const c = framework.computed(() => s.read() * 2);
+      const c = framework.computed(() => s.read() * 2, [s]);
 
       expect(c.read()).toEqual(4);
       return c.read();
@@ -113,11 +113,11 @@ function frameworkTests({ framework, testPullCounts }: FrameworkInfo) {
     let c: any;
 
     framework.withBuild(() => {
-      c = framework.computed(() => s.read() * 2);
+      c = framework.computed(() => s.read() * 2, [s]);
 
       framework.effect(() => {
         spy(c.read());
-      });
+      }, [c]);
     });
     expect(spy.mock.calls.length).toBe(1);
 

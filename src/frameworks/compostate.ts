@@ -6,16 +6,19 @@ import { ReactiveFramework } from "../util/reactiveFramework";
 export const compostateFramework: ReactiveFramework = {
   name: "Compostate",
   signal: (initialValue) => {
-    const [get, set] = signal(initialValue);
+    const val = signal(initialValue);
+    const [get, set] = val;
     return {
       write: (v) => set(v),
       read: () => get(),
+      identity: () => val,
     };
   },
   computed: (fn) => {
     const get = computed(fn);
     return {
       read: () => get(),
+      identity: () => get,
     };
   },
   effect: (fn) => syncEffect(fn),

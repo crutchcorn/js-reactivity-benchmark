@@ -9,14 +9,14 @@ export function broadPropagation(bridge: ReactiveFramework) {
   for (let i = 0; i < 50; i++) {
     let current = bridge.computed(() => {
       return head.read() + i;
-    });
+    }, [head]);
     let current2 = bridge.computed(() => {
       return current.read() + 1;
-    });
+    }, [current]);
     bridge.effect(() => {
       current2.read();
       callCounter.count++;
-    });
+    }, [current2]);
     last = current2;
   }
 

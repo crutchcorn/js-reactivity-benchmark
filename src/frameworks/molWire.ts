@@ -10,12 +10,14 @@ export const molWireFramework: ReactiveFramework = {
     return {
       write: (v: T) => atom.put(v),
       read: () => atom.sync(),
+      identity: () => atom,
     };
   },
   computed: (fn) => {
     const atom = new Atom("", fn);
     return {
       read: () => atom.sync(),
+      identity: () => atom,
     };
   },
   effect: (fn) => new Atom("", fn).sync(),

@@ -17,12 +17,14 @@ export const svelteFramework: ReactiveFramework = {
     return {
       write: (v) => $.set(s, v),
       read: () => $.get(s),
+      identity: () => s,
     };
   },
   computed: (fn) => {
     const c = $.derived(fn);
     return {
       read: () => $.get(c),
+      identity: () => c,
     };
   },
   effect: (fn) => {

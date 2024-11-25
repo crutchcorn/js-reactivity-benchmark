@@ -8,12 +8,14 @@ export const tc39SignalsProposalStage0: ReactiveFramework = {
     return {
       write: (v) => s.set(v),
       read: () => s.get(),
+      identity: () => s,
     };
   },
   computed: (fn) => {
     const c = new Signal.Computed(fn);
     return {
       read: () => c.get(),
+      identity: () => c,
     };
   },
   effect: (fn) => effect(fn),

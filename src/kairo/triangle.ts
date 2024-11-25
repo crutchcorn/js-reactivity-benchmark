@@ -12,17 +12,17 @@ export function triangle(bridge: ReactiveFramework) {
     list.push(current);
     current = bridge.computed(() => {
       return c.read() + 1;
-    });
+    }, [c]);
   }
   let sum = bridge.computed(() => {
     return list.map((x) => x.read()).reduce((a, b) => a + b, 0);
-  });
+  }, list);
 
   let callCounter = new Counter();
   bridge.effect(() => {
     sum.read();
     callCounter.count++;
-  });
+  }, [sum]);
 
   return () => {
     const constant = count(width);

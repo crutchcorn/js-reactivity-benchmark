@@ -9,17 +9,17 @@ export function repeatedObservers(bridge: ReactiveFramework) {
   let current = bridge.computed(() => {
     let result = 0;
     for (let i = 0; i < size; i++) {
-      // tbh I think it's meanigless to be this big...
+      // tbh I think it's meaningless to be this big...
       result += head.read();
     }
     return result;
-  });
+  }, [head]);
 
   let callCounter = new Counter();
   bridge.effect(() => {
     current.read();
     callCounter.count++;
-  });
+  }, [current]);
 
   return () => {
     bridge.withBatch(() => {

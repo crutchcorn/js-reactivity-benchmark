@@ -15,6 +15,7 @@ import { usignalFramework } from "./frameworks/uSignal";
 import { vueReactivityFramework } from "./frameworks/vueReactivity";
 import { xReactivityFramework } from "./frameworks/xReactivity";
 import { svelteFramework } from "./frameworks/svelte";
+import { tanstackFramework } from "./frameworks/tanstackSignals";
 // import { compostateFramework } from "./frameworks/compostate";
 // import { valtioFramework } from "./frameworks/valtio";
 
@@ -35,6 +36,8 @@ export const frameworkInfo: FrameworkInfo[] = [
   { framework: vueReactivityFramework, testPullCounts: true },
   // NOTE: MobX currently hangs on some of the `dynamic` tests and `cellx` tests, so disable it if you want to run them. (https://github.com/mobxjs/mobx/issues/3926)
   { framework: mobxFramework, testPullCounts: false },
+
+  { framework: tanstackFramework, testPullCounts: false },
 
   // --- Disabled frameworks ---
   // NOTE: the compostate adapter is currently broken and unused.

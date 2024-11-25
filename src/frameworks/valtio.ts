@@ -23,6 +23,7 @@ export const valtioFramework: ReactiveFramework = {
           return s.value;
         }
       },
+      identity: () => s,
     };
   },
   computed: (fn) => {
@@ -40,6 +41,7 @@ export const valtioFramework: ReactiveFramework = {
           return c.value;
         }
       },
+      identity: () => c,
     };
   },
   effect: (fn) => {

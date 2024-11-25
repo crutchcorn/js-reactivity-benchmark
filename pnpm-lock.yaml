@@ -20,6 +20,9 @@ importers:
       '@solidjs/reactivity':
         specifier: ^0.0.9
         version: 0.0.9
+      '@tanstack/store':
+        specifier: https://pkg.pr.new/@tanstack/store@109
+        version: https://pkg.pr.new/@tanstack/store@109
       '@vue/reactivity':
         specifier: ^3.5.13
         version: 3.5.13
@@ -660,6 +663,10 @@ packages:
 
   '@solidjs/reactivity@0.0.9':
     resolution: {integrity: sha512-duaaHwXTTY/YF+H9AT4ZEiL6H9FwMxQOMrTIDpsRYLBkbl3Y/FKaeoYu7CK4Ontbra6/LAi0DZyb/M6vCcJoMw==}
+
+  '@tanstack/store@https://pkg.pr.new/@tanstack/store@109':
+    resolution: {tarball: https://pkg.pr.new/@tanstack/store@109}
+    version: 0.5.5
 
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
@@ -1516,6 +1523,8 @@ snapshots:
     optional: true
 
   '@solidjs/reactivity@0.0.9': {}
+
+  '@tanstack/store@https://pkg.pr.new/@tanstack/store@109': {}
 
   '@types/estree@1.0.6': {}
 

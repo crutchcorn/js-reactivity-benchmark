@@ -17,12 +17,14 @@ export const vueReactivityFramework: ReactiveFramework = {
     return {
       read: () => data.value as any,
       write: (v) => (data.value = v as any),
+      identity: () => data,
     };
   },
   computed: (fn) => {
     const c = computed(fn);
     return {
       read: () => c.value,
+      identity: () => c,
     };
   },
   effect: (fn) => {

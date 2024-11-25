@@ -4,21 +4,21 @@ import { ReactiveFramework } from "../util/reactiveFramework";
 /** worst case. */
 export function unstable(bridge: ReactiveFramework) {
   let head = bridge.signal(0);
-  const double = bridge.computed(() => head.read() * 2);
-  const inverse = bridge.computed(() => -head.read());
+  const double = bridge.computed(() => head.read() * 2, [head]);
+  const inverse = bridge.computed(() => -head.read(), [head]);
   let current = bridge.computed(() => {
     let result = 0;
     for (let i = 0; i < 20; i++) {
       result += head.read() % 2 ? double.read() : inverse.read();
     }
     return result;
-  });
+  }, [head, double, inverse]);
 
   let callCounter = new Counter();
   bridge.effect(() => {
     current.read();
     callCounter.count++;
-  });
+  }, [current]);
   return () => {
     bridge.withBatch(() => {
       head.write(1);

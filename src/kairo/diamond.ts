@@ -10,17 +10,17 @@ export function diamond(bridge: ReactiveFramework) {
     current.push(
       bridge.computed(() => {
         return head.read() + 1;
-      })
+      }, [head])
     );
   }
   let sum = bridge.computed(() => {
     return current.map((x) => x.read()).reduce((a, b) => a + b, 0);
-  });
+  }, current);
   let callCounter = new Counter();
   bridge.effect(() => {
     sum.read();
     callCounter.count++;
-  });
+  }, [sum]);
 
   return () => {
     bridge.withBatch(() => {

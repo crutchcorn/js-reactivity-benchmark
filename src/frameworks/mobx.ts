@@ -8,12 +8,14 @@ export const mobxFramework: ReactiveFramework = {
     return {
       read: () => s.get(),
       write: (x) => s.set(x),
+      identity: () => s,
     };
   },
   computed: (fn) => {
     const read = computed(fn);
     return {
       read: () => read.get(),
+      identity: () => read,
     };
   },
   effect: (fn) => autorun(fn),
